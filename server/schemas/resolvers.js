@@ -6,7 +6,7 @@ const resolvers = {
     Query: {
         me: async (parent, args, context) => {
             if (context.user) {
-                const userInfo = await User.findOne({ _id: context.user._id }).select('-__v -password');
+                const userInfo = await User.findOne({ _id: context.user._id }).select('password');
             return userData;
             }
             throw new AuthenticationError('Unable to Log In');
@@ -35,7 +35,7 @@ const resolvers = {
             return {token, user};
         },
 
-        addBook: async (parent, {bookInfo}, context) => {
+        saveBook: async (parent, {bookInfo}, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
